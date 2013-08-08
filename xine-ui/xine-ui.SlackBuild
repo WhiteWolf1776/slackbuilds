@@ -19,12 +19,14 @@
 #  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+#
+#  Modified by N. Blizzard to compile the newer versions of xine-ui
 
 VERSION=${VERSION:-$(echo xine-ui-*.tar.?z* | rev | cut -f 3- -d . | cut -f 1 -d - | rev)}
 # I would use "-march=i486 -mcpu=i686" here as usual, but with XINE it's all or nothing.
 # I'd rather have it work well for the i686/Athlon crowd than suck for everyone.
 BUILD=${BUILD:-1}
+TAG=${TAG:-_WW}
 
 # Automatically determine the architecture we're building on:
 if [ -z "$ARCH" ]; then
@@ -94,5 +96,5 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $TMP/xine-ui-$VERSION-$ARCH-$BUILD.txz
+/sbin/makepkg -l y -c n $TMP/xine-ui-$VERSION-$ARCH-$BUILD$TAG.txz
 

@@ -19,6 +19,8 @@
 #  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#  Modified by N. Blizzard to compile the newer versions of xine-lib
 
 
 # Version on the tarball
@@ -29,6 +31,7 @@ DIRVER=1.2.3
 PKGVER=1.2.3
 
 BUILD=${BUILD:-1}
+TAG=${TAG:-_WW}
 
 # Automatically determine the architecture we're building on:
 if [ -z "$ARCH" ]; then
@@ -105,5 +108,5 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $TMP/xine-lib-$PKGVER-$ARCH-$BUILD.txz
+/sbin/makepkg -l y -c n $TMP/xine-lib-$PKGVER-$ARCH-$BUILD$TAG.txz
 
