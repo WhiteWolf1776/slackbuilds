@@ -1,0 +1,162 @@
+#!/bin/sh
+
+# Slackware build script for qemu
+
+# Copyright 2009, 2010  Andrew Brouwers <abrouwers@gmail.com>
+# Copyright 2013  Edward Koenig, Vancouver, USA <kingbeowulf@gmail.com>
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+# EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# Changelog
+# 1.0	27-FEB-2013	New SBo maintainer
+# 1.0	07-MAR-2013	updated to 1.4, includes qemu-kvm; thanks to
+#			rworkman and ponce for script ideas.
+# 1.1	28-MAR-2013	fix missing docs per C. Willing and
+#			add missing --libdir (patched in qemu-trivial upstream)
+# 2.0   22-OCT-2013     Modified by Nick Blizzard to remove specific version.
+
+PRGNAM=qemu
+VERSION=${VERSION:-$(echo qemu-*.tar.?z* | rev | cut -f 3- -d . | cut -f 1 -d - | rev)}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_WW}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i486 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+CWD=$(pwd)
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i486" ]; then
+  SLKCFLAGS="-O2 -march=i486 -mtune=i686"
+  LIBDIRSUFFIX=""
+  KVMARCH="i386"
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+  KVMARCH="i386"
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+  KVMARCH="x86_64"
+else
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+fi
+
+# Enable only x86* and arm emulation for qemu: if you want to build
+# all the targets available use TARGETS=all
+if [ "${TARGETS:-}" = "all" ]; then
+  targets=""
+else
+  targets="--target-list=i386-softmmu,x86_64-softmmu,i386-linux-user,x86_64-linux-user,arm-softmmu,arm-linux-user,armeb-linux-user"
+fi
+
+KVMGROUP=${KVMGROUP:-users}
+
+# Needed to build man pages if built after plain "su"
+export PATH=$PATH:/usr/share/texmf/bin
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
+cd $PRGNAM-$VERSION
+chown -R root:root .
+chmod -R u+w,go+r-w,a-s .
+
+# Remove double CFLAGS
+sed -i "s|^\ \ CFLAGS=\"-O2\ |  CFLAGS=\"|" configure || exit 1
+
+# check if spice is there
+if pkg-config --exists spice-server ; then
+  with_spice="--enable-spice"
+else
+  with_spice="--disable-spice"
+fi
+
+# check if usbredir is there
+if pkg-config --exists libusbredirhost ; then
+  with_usbredir="--enable-usb-redir"
+else
+  with_usbredir="--disable-usb-redir"
+fi
+
+# --libdir is recognized but not advertised in --help
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+./configure \
+  --prefix=/usr \
+  --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --sysconfdir=/etc \
+  --enable-system \
+  --enable-kvm \
+  --enable-mixemu \
+  --disable-debug-info \
+  --audio-drv-list=alsa,oss,sdl,esd \
+  $targets \
+  $with_spice \
+  $with_usbredir
+
+make V=1 OS_CFLAGS="$SLKCFLAGS"
+
+make install DESTDIR=$PKG
+
+# install some udev rules for /dev/kvm
+mkdir -p $PKG/lib/udev/rules.d/
+sed "s/@GROUP@/$KVMGROUP/" $CWD/65-kvm.rules \
+  > $PKG/lib/udev/rules.d/65-kvm.rules
+
+find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+# create a symlink for qemu-kvm to support aqemu and such frontends
+[ ! -z $KVMARCH ] && ln -s qemu-system-$KVMARCH $PKG/usr/bin/qemu-kvm
+
+# move any generated man pages to their proper location
+if [ -d $PKG/usr/share/man ]; then
+  mv $PKG/usr/share/man $PKG/usr
+  gzip -9 $PKG/usr/man/man?/*.?
+fi
+
+# Add docs, and if present, built documentation to the proper location
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a README LICENSE COPYING COPYING.LIB MAINTAINERS $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a docs/* $PKG/usr/doc/$PRGNAM-$VERSION
+if [ -d $PKG/usr/share/doc ]; then
+  mv $PKG/usr/share/doc/qemu/* $PKG/usr/doc/$PRGNAM-$VERSION/
+  rm -rf $PKG/usr/share/doc
+fi
+
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-tgz}
