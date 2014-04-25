@@ -30,6 +30,7 @@
 # 1.1	28-MAR-2013	fix missing docs per C. Willing and
 #			add missing --libdir (patched in qemu-trivial upstream)
 # 2.0   22-OCT-2013     Modified by Nick Blizzard to remove specific version.
+# 2.1   25-APR-2014     Modified to compile qemu version 2.0.0 - New flags needed
 
 PRGNAM=qemu
 VERSION=${VERSION:-$(echo qemu-*.tar.?z* | rev | cut -f 3- -d . | cut -f 1 -d - | rev)}
@@ -45,7 +46,7 @@ if [ -z "$ARCH" ]; then
 fi
 
 CWD=$(pwd)
-TMP=${TMP:-/tmp/SBo}
+TMP=${TMP:-/tmp/WW}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
@@ -116,7 +117,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc \
   --enable-system \
   --enable-kvm \
-  --enable-mixemu \
   --disable-debug-info \
   --audio-drv-list=alsa,oss,sdl,esd \
   $targets \
