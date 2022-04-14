@@ -1,0 +1,8 @@
+PRGNAM="teams"
+VERSION="latest"
+HOMEPAGE="https://teams.microsoft.com/downloads"
+DOWNLOAD="https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x409&culture=en-us&country=US"
+MD5SUM=""
+REQUIRES=""
+MAINTAINER="Nick Blizzard"
+EMAIL="nickblizzard1776@gmail.com"
