@@ -19,21 +19,6 @@ checksum()
 for pkg in $PKGS; do
   . $pkg/$pkg.info
 
-  if [ "$ARCH" = "x86_64" ]; then
-    case $pkg in
-      nvidia-bumblebee)
-        DOWNLOAD=$(echo $DOWNLOAD | cut -d ' ' -f2-)
-        DOWNLOAD="$DOWNLOAD $DOWNLOAD_x86_64"
-
-        MD5SUM=$(echo $MD5SUM | cut -d ' ' -f2-)
-        MD5SUM="$MD5SUM $MD5SUM_x86_64"
-        ;;
-      *)
-        DOWNLOAD=${DOWNLOAD_x86_64:-$DOWNLOAD}
-        MD5SUM=${MD5SUM_x86_64:-$MD5SUM}
-    esac
-  fi
-
   DOWNLOAD=($DOWNLOAD)
   MD5SUM=($MD5SUM)
 
@@ -60,8 +45,10 @@ for pkg in $PKGS; do
     file=$(cd $pkg; find ../ -type f -name $src)
 
     if [ -z "$file" ]; then
-      wget -O $pkg/$src ${DOWNLOAD[$i]}
+      cd $pkg
+      wget --content-disposition ${DOWNLOAD[$i]}
       checksum $pkg/$src ${MD5SUM[$i]}
+      cd ..
     else
       ln -sf $file $pkg
     fi
