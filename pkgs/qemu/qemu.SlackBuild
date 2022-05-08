@@ -57,6 +57,7 @@
 # 6.0   14-JUL-2019	version update to 4.0.0 release, note minimum dependency versions on release notes, doc fixes
 # 6.1   19-AUG-2019	version update
 # 6.2   16-Nov-2020     version update, 14.2 final release.
+# updated to handle any version
 
 cd $(dirname $0) ; CWD=$(pwd)
 

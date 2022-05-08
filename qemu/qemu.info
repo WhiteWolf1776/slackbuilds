@@ -1,8 +1,0 @@
-PRGNAM="qemu"
-VERSION="6.1.0"
-HOMEPAGE="http://wiki.qemu.org/Main_Page"
-DOWNLOAD="http://wiki.qemu.org/download/qemu-$VERSION.tar.xz"
-MD5SUM=""
-REQUIRES=""
-MAINTAINER="Nick Blizzard"
-EMAIL="nickblizzard1776@gmail.com"

@@ -1,5 +1,5 @@
 PRGNAM="brave-browser"
-VERSION="1.36.116"
+VERSION="$VERSION"
 HOMEPAGE="https://brave.com"
 DOWNLOAD="https://github.com/brave/brave-browser/releases/download/v$VERSION/brave-browser-$VERSION-1.x86_64.rpm"
 MD5SUM=""

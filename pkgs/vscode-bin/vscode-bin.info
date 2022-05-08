@@ -1,5 +1,5 @@
 PRGNAM="vscode-bin"
-VERSION="current"
+VERSION="$VERSION"
 HOMEPAGE="https://code.visualstudio.com/"
 DOWNLOAD="https://code.visualstudio.com/sha/download?build=stable&os=linux-x64"
 MD5SUM=""

@@ -1,0 +1,8 @@
+PRGNAM="steam"
+VERSION="$VERSION"
+HOMEPAGE="https://store.steampowered.com/"
+DOWNLOAD="https://repo.steampowered.com/steam/archive/precise/steam_$VERSION.tar.gz"
+MD5SUM=""
+REQUIRES="zenity"
+MAINTAINER="Nick Blizzard"
+EMAIL="nickblizzard1776@gmail.com"

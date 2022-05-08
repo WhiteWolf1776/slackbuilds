@@ -45,10 +45,8 @@ for pkg in $PKGS; do
     file=$(cd $pkg; find ../ -type f -name $src)
 
     if [ -z "$file" ]; then
-      cd $pkg
-      wget --content-disposition ${DOWNLOAD[$i]}
+      wget -O $pkg/$src ${DOWNLOAD[$i]}
       checksum $pkg/$src ${MD5SUM[$i]}
-      cd ..
     else
       ln -sf $file $pkg
     fi

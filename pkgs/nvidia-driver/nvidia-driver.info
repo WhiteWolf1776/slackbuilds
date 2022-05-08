@@ -1,5 +1,5 @@
 PRGNAM="nvidia-driver"
-VERSION="470.103.01"
+VERSION="$VERSION"
 HOMEPAGE="http://www.nvidia.com"
 DOWNLOAD="https://download.nvidia.com/XFree86/Linux-x86_64/$VERSION/NVIDIA-Linux-x86_64-$VERSION.run \
           https://download.nvidia.com/XFree86/nvidia-installer/nvidia-installer-$VERSION.tar.bz2 \

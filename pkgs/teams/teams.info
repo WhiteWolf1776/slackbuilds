@@ -1,5 +1,5 @@
 PRGNAM="teams"
-VERSION="latest"
+VERSION="$VERSION"
 HOMEPAGE="https://teams.microsoft.com/downloads"
 DOWNLOAD="https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x409&culture=en-us&country=US"
 MD5SUM=""

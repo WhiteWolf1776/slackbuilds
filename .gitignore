@@ -3,3 +3,6 @@
 *.tar.?z*
 *~
 *.swp
+.*~
+builds/*
+__pycache__
