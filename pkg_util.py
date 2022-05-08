@@ -1,4 +1,9 @@
+#!/usr/bin/env python3
+#
+# Copyright (C) 2022 Nick Blizzard
 """utility class to check versions"""
+__author__ = "Nick Blizzard"
+__copyright__ = "Copyright (C) 2022 Nick Blizzard"
 from dataclasses import dataclass
 import requests
 

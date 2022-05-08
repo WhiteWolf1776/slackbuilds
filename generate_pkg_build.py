@@ -1,17 +1,27 @@
+#!/usr/bin/env python3
+#
+# Copyright (C) 2022 Nick Blizzard
 """process and prep for updates as needed"""
+__author__ = "Nick Blizzard"
+__copyright__ = "Copyright (C) 2022 Nick Blizzard"
 import os
+from pathlib import Path
 import shutil
 import hashlib
 import re
+import json
 import requests
 import notify2
-from pkg_version import get_pkg_list
+from pkg_util import get_pkg_list
 
 def main():
     """main loop"""
-    build_dir = "builds"
-    if not os.path.exists(build_dir):
-        os.mkdir(build_dir)
+    cfg = None
+    with open("pkg_build.cfg",'r',encoding="utf-8") as cfg_file:
+        cfg = json.load(cfg_file)
+    build_dir = cfg['build_dir']
+
+    Path(build_dir).mkdir(parents=True, exist_ok=True)
 
     changes = []
     for pkg in get_pkg_list():
@@ -23,7 +33,7 @@ def main():
             notify_msg.append(change)
 
     if notify_msg:
-        notify2.init('slackware extra update check')
+        notify2.init('slackware unsupported update check')
 
         note = notify2.Notification("Updates Found",
                                     "\n".join(notify_msg),
@@ -32,13 +42,11 @@ def main():
         note.set_timeout(notify2.EXPIRES_NEVER)
         note.show()
 
-
-
 def create_build(pkg,ver,build_dir):
     """create a build folder for processing"""
     build = f"{pkg}-{ver}"
     if build not in get_folder_names(build_dir):
-        shutil.copytree(f"pkgs/{pkg}",f"{build_dir}/{build}")
+        shutil.copytree(f"unsupported-pkgs/{pkg}",f"{build_dir}/{build}")
         info_text = ""
         with open(f"{build_dir}/{build}/{pkg}.info",'r',encoding="utf-8") as info:
             info_text = info.read()
