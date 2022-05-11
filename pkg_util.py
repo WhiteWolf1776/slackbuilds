@@ -45,14 +45,14 @@ def get_brave_latest_ver():
 def get_vscode_latest_ver():
     """get latest version"""
     ver_url = "https://code.visualstudio.com/sha/download?build=stable&os=linux-x64"
-    data = requests.get(ver_url,headers={'User-Agent':'Slackware-Linux'})
+    data = requests.request('HEAD',ver_url,headers={'User-Agent':'Slackware-Linux'})
     filename = data.headers['content-disposition']
     return str(filename.removesuffix('.tar.gz"').split('-')[-1])
 
 def get_teams_latest_ver():
     """get latest version"""
     ver_url = "https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x409&culture=en-us&country=US"
-    data = requests.get(ver_url,allow_redirects=True,headers={'User-Agent':'Slackware-Linux'})
+    data = requests.request('HEAD',ver_url,allow_redirects=True,headers={'User-Agent':'Slackware-Linux'})
     filename = data.request.url.split("/")[-1]
     version = filename.split("_")[1]
     return version
