@@ -13,9 +13,13 @@ class Package:
     name: str
     version: str
 
-def get_pkg_list():
+def get_pkg_list(args):
     """create and return a list of packages to process"""
     pkg_list = []
+    if args.pkg_list:
+        for pkg,ver in zip(args.pkg_list.split(','),args.ver_list.split(',')):
+            pkg_list.append(Package(pkg,ver))
+        return pkg_list
     pkg_list.append(Package("qemu",get_qemu_latest_version()))
     pkg_list.append(Package("nvidia-driver",get_nvidia_latest_version()))
     pkg_list.append(Package("nvidia-kernel",get_nvidia_latest_version()))

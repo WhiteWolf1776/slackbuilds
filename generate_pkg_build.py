@@ -6,6 +6,7 @@ __author__ = "Nick Blizzard"
 __copyright__ = "Copyright (C) 2022 Nick Blizzard"
 import os
 from pathlib import Path
+import argparse
 import shutil
 import hashlib
 import re
@@ -23,8 +24,10 @@ def main():
 
     Path(build_dir).mkdir(parents=True, exist_ok=True)
 
+    args = create_argparse()
+
     changes = []
-    for pkg in get_pkg_list():
+    for pkg in get_pkg_list(args):
         changes.append(create_build(pkg.name,pkg.version,build_dir))
 
     notify_msg = []
@@ -41,6 +44,15 @@ def main():
                                     )
         note.set_timeout(notify2.EXPIRES_NEVER)
         note.show()
+
+def create_argparse():
+    """parse out command line arguments"""
+    parser = argparse.ArgumentParser(description='generate slackware build scripts')
+    parser.add_argument('--pkg_list',help='comma seperated list of packages')
+    parser.add_argument('--ver_list',help='comma seperated list of versions')
+    args = parser.parse_args()
+    return args
+
 
 def create_build(pkg,ver,build_dir):
     """create a build folder for processing"""
