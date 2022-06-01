@@ -115,7 +115,8 @@ find -L . \
 cd $TMP/nvidia-installer-$VERSION
 
 # Let's try to remove the conflicting files and GPU detection
-  patch -p0 < $CWD/skip_conflict-GPU_detect.patch
+# Removed as it is now standard 515 and >
+#  patch -p0 < $CWD/skip_conflict-GPU_detect.patch
 
   chown -R root:root .
   find -L . \
