@@ -23,9 +23,10 @@ def get_pkg_list(args):
     pkg_list.append(Package("qemu",get_qemu_latest_version()))
     pkg_list.append(Package("nvidia-driver",get_nvidia_latest_version()))
     pkg_list.append(Package("nvidia-kernel",get_nvidia_latest_version()))
-    pkg_list.append(Package("brave-browser",get_brave_latest_ver()))
+    #pkg_list.append(Package("brave-browser",get_brave_latest_ver()))
     pkg_list.append(Package("vscode-bin",get_vscode_latest_ver()))
     pkg_list.append(Package("teams",get_teams_latest_ver()))
+    pkg_list.append(Package("microsoft-edge",get_msedge_latest_ver()))
     pkg_list.append(Package("zenity",get_zenity_latest_ver()))
     pkg_list.append(Package("steam",get_steam_latest_version()))
     pkg_list.append(Package("signal-desktop",get_signal_latest_version()))
@@ -59,6 +60,14 @@ def get_teams_latest_ver():
     data = requests.request('HEAD',ver_url,allow_redirects=True,headers={'User-Agent':'Slackware-Linux'})
     filename = data.request.url.split("/")[-1]
     version = filename.split("_")[1]
+    return version
+
+def get_msedge_latest_ver():
+    """get latest version"""
+    ver_url = "https://go.microsoft.com/fwlink?linkid=2149137"
+    data = requests.request('HEAD',ver_url,allow_redirects=True,headers={'User-Agent':'Slackware-Linux'})
+    filename = data.request.url.split("/")[-1]
+    version = filename.split("-")[3]
     return version
 
 def get_zenity_latest_ver():
