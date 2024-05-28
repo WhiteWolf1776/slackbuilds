@@ -1,8 +1,0 @@
-PRGNAM="brave-browser"
-VERSION="$VERSION"
-HOMEPAGE="https://brave.com"
-DOWNLOAD="https://github.com/brave/brave-browser/releases/download/v$VERSION/brave-browser-$VERSION-1.x86_64.rpm"
-MD5SUM=""
-REQUIRES=""
-MAINTAINER="Nick Blizzard"
-EMAIL="nickblizzard1776@gmail.com"

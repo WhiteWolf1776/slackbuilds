@@ -1,8 +1,0 @@
-PRGNAM="microsoft-edge"
-VERSION="$VERSION"
-HOMEPAGE="https://www.microsoft.com/edge"
-DOWNLOAD="https://packages.microsoft.com/yumrepos/edge/microsoft-edge-stable-$VERSION-1.x86_64.rpm"
-MD5SUM=""
-REQUIRES=""
-MAINTAINER="Nick Blizzard"
-EMAIL="nickblizzard1776@gmail.com"

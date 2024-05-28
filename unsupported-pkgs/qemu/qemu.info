@@ -1,8 +1,0 @@
-PRGNAM="qemu"
-VERSION="$VERSION"
-HOMEPAGE="https://www.qemu.org/"
-DOWNLOAD="https://download.qemu.org/qemu-$VERSION.tar.xz"
-MD5SUM=""
-REQUIRES=""
-MAINTAINER="Nick Blizzard"
-EMAIL="nickblizzard1776@gmail.com"

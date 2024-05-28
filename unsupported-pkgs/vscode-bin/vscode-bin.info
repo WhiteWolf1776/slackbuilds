@@ -1,8 +1,0 @@
-PRGNAM="vscode-bin"
-VERSION="$VERSION"
-HOMEPAGE="https://code.visualstudio.com/"
-DOWNLOAD="https://code.visualstudio.com/sha/download?build=stable&os=linux-x64"
-MD5SUM=""
-REQUIRES=""
-MAINTAINER="Nick Blizzard"
-EMAIL="nickblizzard1776@gmail.com"

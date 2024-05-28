@@ -20,16 +20,16 @@ def get_pkg_list(args):
         for pkg,ver in zip(args.pkg_list.split(','),args.ver_list.split(',')):
             pkg_list.append(Package(pkg,ver))
         return pkg_list
-    pkg_list.append(Package("qemu",get_qemu_latest_version()))
+    #pkg_list.append(Package("qemu",get_qemu_latest_version()))
     pkg_list.append(Package("nvidia-driver",get_nvidia_latest_version()))
     pkg_list.append(Package("nvidia-kernel",get_nvidia_latest_version()))
     #pkg_list.append(Package("brave-browser",get_brave_latest_ver()))
-    pkg_list.append(Package("vscode-bin",get_vscode_latest_ver()))
-    pkg_list.append(Package("teams",get_teams_latest_ver()))
-    pkg_list.append(Package("microsoft-edge",get_msedge_latest_ver()))
-    pkg_list.append(Package("zenity",get_zenity_latest_ver()))
-    pkg_list.append(Package("steam",get_steam_latest_version()))
-    pkg_list.append(Package("signal-desktop",get_signal_latest_version()))
+    #pkg_list.append(Package("vscode-bin",get_vscode_latest_ver()))
+    #pkg_list.append(Package("teams",get_teams_latest_ver()))
+    #pkg_list.append(Package("microsoft-edge",get_msedge_latest_ver()))
+    #pkg_list.append(Package("zenity",get_zenity_latest_ver()))
+    #pkg_list.append(Package("steam",get_steam_latest_version()))
+    #pkg_list.append(Package("signal-desktop",get_signal_latest_version()))
     return pkg_list
 
 def get_brave_latest_ver():

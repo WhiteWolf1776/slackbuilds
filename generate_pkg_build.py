@@ -36,7 +36,7 @@ def main():
             notify_msg.append(change)
 
     if notify_msg:
-        notify2.init('slackware unsupported update check')
+        notify2.init('slackware custom update check')
 
         note = notify2.Notification("Updates Found",
                                     "\n".join(notify_msg),
@@ -58,7 +58,7 @@ def create_build(pkg,ver,build_dir):
     """create a build folder for processing"""
     build = f"{pkg}-{ver}"
     if build not in get_folder_names(build_dir):
-        shutil.copytree(f"unsupported-pkgs/{pkg}",f"{build_dir}/{build}")
+        shutil.copytree(f"custom-pkgs/{pkg}",f"{build_dir}/{build}")
         info_text = ""
         with open(f"{build_dir}/{build}/{pkg}.info",'r',encoding="utf-8") as info:
             info_text = info.read()

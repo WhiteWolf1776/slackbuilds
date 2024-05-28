@@ -1,8 +1,0 @@
-PRGNAM="zenity"
-VERSION="$VERSION"
-HOMEPAGE="https://gitlab.gnome.org/GNOME/zenity"
-DOWNLOAD="https://download.gnome.org/sources/zenity/3.42/zenity-$VERSION.tar.xz"
-MD5SUM=""
-REQUIRES=""
-MAINTAINER="Nick Blizzard"
-EMAIL="nickblizzard1776@gmail.com"

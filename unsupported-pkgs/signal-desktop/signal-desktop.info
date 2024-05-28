@@ -1,8 +1,0 @@
-PRGNAM="signal-desktop"
-VERSION="$VERSION"
-HOMEPAGE="https://signal.org/"
-DOWNLOAD="https://updates.signal.org/desktop/apt/pool/main/s/signal-desktop/signal-desktop_$VERSION_amd64.deb"
-MD5SUM=""
-REQUIRES=""
-MAINTAINER="Nick Blizzard"
-EMAIL="nickblizzard1776@gmail.com"
